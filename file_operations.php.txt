@@ -1,0 +1,28 @@
+<?php
+$filename = "example.txt";
+
+if (file_exists($filename)) {
+    echo "The file '$filename' exists.<br>";
+
+    $content = file_get_contents($filename);
+    echo "File content using file_get_contents(): <br>" . nl2br($content) . "<br><br>";
+
+       $fileLines = file($filename);
+    echo "File content using file(): <br>";
+    foreach ($fileLines as $lineNum => $line) {
+        echo "Line $lineNum: " . htmlspecialchars($line) . "<br>";
+    }
+
+    $newContent = "\nNew line of content added at " . date('Y-m-d H:i:s');
+    file_put_contents($filename, $newContent, FILE_APPEND);
+    echo "<br>New content added to the file.<br>";
+
+    $updatedContent = file_get_contents($filename);
+    echo "Updated file content: <br>" . nl2br($updatedContent) . "<br>";
+
+} else {
+       $initialContent = "This is the initial content of the file.\n";
+    file_put_contents($filename, $initialContent);
+    echo "File '$filename' has been created and content has been written.<br>";
+}
+?>
